@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Matriz de Eisenhower de las iniciativas comerciales con IA de NEO Consulting y su orden de ejecución.">
+<title>Matriz de Iniciativas Comerciales</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+/* NEO brand kit · paleta única, sin modo oscuro a propósito */
+:root{
+  color-scheme:light;
+  --navy:#000033;
+  --azul:#2B5BFC;
+  --azul-medio:#7E99FE;
+  --azul-claro:#C5D5F7;
+  --gris:#4A4A5F;
+  --azul-palido:#EEF3FF;
+  --relleno:#D8E0F5;
+  --blanco:#FFFFFF;
+  --f:"Montserrat", "Segoe UI", Arial, sans-serif;
+}
+*{box-sizing:border-box}
+body{background:var(--blanco);color:var(--navy);font-family:var(--f);font-size:15px;line-height:1.5;font-variant-numeric:tabular-nums}
+.wrap{max-width:1140px;margin:0 auto;padding-inline:20px;padding-block:44px 72px;display:flex;flex-direction:column;gap:44px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--azul)}
+
+/* Encabezado */
+header{display:flex;flex-direction:column;gap:12px}
+h1{font-size:clamp(28px,4.2vw,42px);font-weight:800;line-height:1.08;letter-spacing:-.015em}
+header p{margin:0;max-width:68ch;font-size:15.5px;color:var(--gris)}
+.rules{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:6px;font-size:14px}
+.rules div{display:flex;gap:8px;align-items:baseline}
+.rules b{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--azul)}
+
+/* Matriz */
+.mx{display:grid;grid-template-columns:56px 1fr 1fr;grid-template-rows:auto auto auto}
+.hd{grid-row:1;text-align:center;padding:0 12px 18px;display:flex;flex-direction:column;gap:2px}
+.hd.c1{grid-column:2}
+.hd.c2{grid-column:3;border-left:2px solid var(--navy)}
+.hd strong,.sd strong{font-size:clamp(18px,2.2vw,26px);font-weight:800;letter-spacing:-.01em}
+.hd span,.sd span{font-size:11.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--azul)}
+.sd{grid-column:1;display:flex;align-items:center;justify-content:center;padding-right:14px}
+.sd div{writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.sd.r1{grid-row:2}
+.sd.r2{grid-row:3;border-top:2px solid var(--navy)}
+
+.q{padding:30px 28px 28px;display:flex;flex-direction:column;gap:18px;min-width:0}
+.q.do{grid-column:2;grid-row:2;background:var(--azul);color:var(--blanco);border-top-left-radius:14px}
+.q.plan{grid-column:3;grid-row:2;background:var(--navy);color:var(--blanco);border-left:2px solid var(--navy);border-top-right-radius:14px}
+.q.del{grid-column:2;grid-row:3;background:var(--azul-claro);color:var(--navy);border-top:2px solid var(--navy);border-bottom-left-radius:14px}
+.q.drop{grid-column:3;grid-row:3;background:var(--azul-palido);color:var(--navy);border-top:2px solid var(--navy);border-left:2px solid var(--navy);border-bottom-right-radius:14px}
+
+.q-head{display:flex;flex-direction:column;gap:6px}
+.q-axis{display:none;font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;opacity:.8}
+.q-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.q h3{font-size:clamp(24px,2.8vw,32px);font-weight:800;letter-spacing:-.01em}
+.q-count{font-size:12.5px;font-weight:600;opacity:.8}
+.q-desc{margin:0;font-size:14.5px;font-weight:500;max-width:46ch;opacity:.92}
+
+.q ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.chip{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:12px;align-items:center;padding:9px 12px 9px 9px;border-radius:9px}
+.rank{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px}
+.nm{font-weight:600;font-size:14.5px;line-height:1.28}
+.nm small{display:block;font-weight:500;font-size:12px;margin-top:2px;opacity:.75}
+.pts{font-weight:800;font-size:15px;text-align:right;line-height:1.1}
+.pts small{display:block;font-size:10.5px;font-weight:600;letter-spacing:.04em;opacity:.7}
+
+.do .chip{background:rgba(255,255,255,.13)}
+.do .rank{background:var(--blanco);color:var(--azul)}
+.plan .chip{background:rgba(255,255,255,.08)}
+.plan .rank{background:var(--azul-medio);color:var(--navy)}
+.del .chip{background:rgba(255,255,255,.55)}
+.del .rank{background:var(--navy);color:var(--blanco)}
+.drop .chip{background:var(--blanco)}
+.drop .rank{background:var(--gris);color:var(--blanco)}
+.drop .q-desc,.drop .nm small{color:var(--gris)}
+
+.legend{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:13px;color:var(--gris);margin-top:14px;padding-left:56px}
+.legend b{color:var(--navy)}
+
+/* Orden de ejecución */
+.order{display:flex;flex-direction:column;gap:14px}
+h2{font-size:clamp(22px,2.6vw,28px);font-weight:800;letter-spacing:-.01em}
+.order > p{margin:0;color:var(--gris);max-width:72ch}
+.tw{overflow-x:auto;border:1px solid var(--relleno);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:900px}
+th,td{text-align:left;padding:13px 14px;vertical-align:top;border-bottom:1px solid var(--relleno)}
+tbody tr:last-child td{border-bottom:none}
+th{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--azul);background:var(--azul-palido);white-space:nowrap}
+th.n,td.n{text-align:right;white-space:nowrap}
+td.ord{font-size:22px;font-weight:800;color:var(--azul);width:56px;line-height:1.1}
+.t-nm{font-weight:700}
+.t-ds{font-size:13px;color:var(--gris);margin-top:3px;max-width:54ch}
+.tag{display:inline-block;font-size:12px;font-weight:700;padding:4px 11px;border-radius:999px;white-space:nowrap}
+.tag.do{background:var(--azul);color:var(--blanco)}
+.tag.plan{background:var(--navy);color:var(--blanco)}
+.tag.del{background:var(--azul-claro);color:var(--navy)}
+.tag.drop{background:var(--azul-palido);color:var(--gris);box-shadow:inset 0 0 0 1px var(--relleno)}
+.okr{font-size:12.5px;font-weight:600;white-space:nowrap}
+td.score{font-weight:800;font-size:16px}
+.tie{display:block;font-size:11px;font-weight:500;color:var(--gris);margin-top:4px;white-space:normal;max-width:16ch;margin-left:auto}
+.deps{margin:0;padding-left:16px;font-size:12.5px;color:var(--gris)}
+
+footer{font-size:12.5px;color:var(--gris);display:flex;flex-direction:column;gap:6px;max-width:84ch;border-top:1px solid var(--relleno);padding-top:18px}
+footer p{margin:0}
+
+@media (max-width:760px){
+  .mx{grid-template-columns:1fr;grid-template-rows:none;gap:10px}
+  .hd,.sd{display:none}
+  .q{grid-column:auto !important;grid-row:auto !important;border:none !important;border-radius:14px !important;padding:22px 18px}
+  .q-axis{display:block}
+  .legend{padding-left:0}
+}
+body{margin:0}
+img{max-width:100%}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">NEO Consulting · Iniciativas comerciales con IA</div>
+    <h1>Matriz de Eisenhower de iniciativas comerciales</h1>
+    <p>La importancia se mide por el impacto en el negocio y la urgencia por la complejidad técnica. Arriba a la izquierda quedan las iniciativas con mucho impacto y poca complejidad: son las primeras en ejecutarse.</p>
+    <div class="rules">
+      <div><b>Escala</b><span>1 a 10</span></div>
+      <div><b>Corte</b><span>Impacto alto ≥ 6 · Complejidad baja ≤ 5</span></div>
+      <div><b>Puntaje</b><span>Impacto × (11 − Complejidad)</span></div>
+    </div>
+  </header>
+
+  <section aria-label="Matriz de cuatro cuadrantes">
+    <div class="mx" id="mx">
+      <div class="hd c1"><strong>Baja complejidad</strong><span>Complejidad 1–5</span></div>
+      <div class="hd c2"><strong>Alta complejidad</strong><span>Complejidad 6–10</span></div>
+      <div class="sd r1"><div><strong>Alto impacto</strong><span>6–10</span></div></div>
+      <div class="sd r2"><div><strong>Bajo impacto</strong><span>1–5</span></div></div>
+    </div>
+    <div class="legend">
+      <span><b>Círculo:</b> orden de ejecución</span>
+      <span><b>Número a la derecha:</b> puntaje</span>
+      <span><b>#:</b> número en el listado original</span>
+    </div>
+  </section>
+
+  <section class="order" aria-labelledby="o-title">
+    <div class="eyebrow">Hoja de ruta</div>
+    <h2 id="o-title">Orden de ejecución</h2>
+    <p>Las 18 iniciativas ordenadas de mayor a menor puntaje. En los empates va primero la que desbloquea a otras o la de mayor impacto.</p>
+    <div class="tw">
+      <table>
+        <colgroup><col style="width:6%"><col style="width:38%"><col style="width:9%"><col style="width:9%"><col style="width:7%"><col style="width:8%"><col style="width:9%"><col style="width:22%"></colgroup>
+        <thead>
+          <tr><th>Orden</th><th>Iniciativa</th><th>OKR</th><th>Cuadrante</th><th class="n">Impacto</th><th class="n">Complejidad</th><th class="n">Puntaje</th><th>Dependencias y consideraciones</th></tr>
+        </thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p>Los puntajes originales (1–5) se multiplicaron por 2. Los que valían 3 se reasignaron a 5 o 6 según sus dependencias, para que ninguna iniciativa quede sobre la línea de corte.</p>
+    <p>La iniciativa 19 fue eliminada y la 20 se retiró por superponerse con la #3.</p>
+  </footer>
+</div>
+
+<script>
+const Q = {
+  do:   {t:"Hacer",     axis:"Alto impacto · Baja complejidad", d:"Mucho impacto y poca complejidad. Se ejecutan primero."},
+  plan: {t:"Programar", axis:"Alto impacto · Alta complejidad", d:"Mucho impacto, pero requieren más desarrollo. Se planifican con fecha."},
+  del:  {t:"Delegar",   axis:"Bajo impacto · Baja complejidad", d:"Aportan poco y son simples. Se asignan cuando haya capacidad libre."},
+  drop: {t:"Eliminar",  axis:"Bajo impacto · Alta complejidad", d:"Aportan poco y son complejas. No se abordan por ahora."}
+};
+const DATA = [
+ {n:1, okr:"Ventas", s:"Recomendador de cross-sell & upselling", name:"Recomendador de cross-sell & upselling", desc:"Sugiere qué servicio del catálogo ofrecer según lo que la cuenta ya compró y lo que compraron cuentas comparables.", i:10, c:6, dep:["BBDD actualizada","v2: revisando directamente los organigramas"]},
+ {n:2, okr:"Ventas", s:"Stalkeo comercial", name:"Stalkeo comercial: monitoreo externo de cuentas y perfiles", desc:"Vigila señales externas (redes, medios, podcasts, apariciones públicas) de contactos y empresas target para detectar el momento correcto de acercamiento.", i:8, c:10, dep:["v1: web search, noticias, podcasts","v2: LinkedIn y redes sociales"]},
+ {n:3, okr:"EBITDA", s:"Apollo → HubSpot vía Neo Brain", name:"Integración de prospectos de Apollo a HubSpot vía Neo Brain", desc:"Carga automática a HubSpot de los contactos y empresas relevados en eventos y en Apollo, sin carga manual.", i:10, c:2, dep:["API Apollo: primero correos; con la validación de contactos, teléfonos"]},
+ {n:4, okr:"Ventas", s:"Prospección outbound asistida", name:"Prospección outbound asistida (SDR + evaluador de leads)", desc:"Un agente identifica y prioriza empresas target por industria y evalúa qué tan calificado está cada lead antes del acercamiento.", i:5, c:10, dep:["Generar indicadores para evaluar empresas","Acceso a fuentes externas"]},
+ {n:5, okr:"Ventas", s:"Campañas desde caso de éxito", name:"Generador de campañas a partir de un caso de éxito", desc:"Al cerrar un proyecto exitoso, genera una campaña: contenido y lista de contactos similares a quienes enviarla.", i:10, c:4, dep:["Base de casos de éxito","BBDD actualizada"]},
+ {n:6, okr:"Ventas", s:"AI Brief previo a reuniones", name:"AI Brief: preparación previa a reuniones", desc:"Antes de una reunión arma un brief con información externa de la cuenta y el historial de comunicación, para que el KAM llegue preparado.", i:8, c:5, dep:["Nomenclatura de reuniones"]},
+ {n:7, okr:"Ventas", s:"AI Coach de discovery y negociación", name:"AI Coach: apoyo en discovery y negociación", desc:"Sugiere preguntas durante el discovery call y acompaña al KAM en momentos de negociación.", i:5, c:6, dep:["v1: post reunión con indicadores y rating por etapa","v2: análisis en tiempo real (tipo Granola)"]},
+ {n:8, okr:"EBITDA", s:"Costeo post-propuesta", name:"Automatización del costeo posterior a la propuesta", desc:"Genera automáticamente el archivo de costeo de una propuesta.", i:8, c:4, dep:["Ejemplo de horas por tarea"]},
+ {n:9, okr:"EBITDA", s:"Carpeta y deal en HubSpot", name:"Automatización de carpeta y deal en HubSpot", desc:"Crea la carpeta y el registro del deal en HubSpot apenas se abre una oportunidad.", i:8, c:2, dep:["Detalle de campos a completar en HubSpot"]},
+ {n:10, okr:"Ventas", s:"Propuestas interactivas", name:"Propuestas con formatos interactivos", desc:"Reemplaza el formato estático de propuesta por uno interactivo para hacer pruebas A/B.", i:4, c:8, dep:["Generador de propuestas desarrollado al 100%"]},
+ {n:11, okr:"Ventas", s:"Piloto: propuesta post-llamada", name:"Piloto: propuesta al terminar la llamada", desc:"Al terminar un discovery call arma un primer borrador de propuesta (“momento wow”).", i:4, c:8, dep:["Muchas dependencias para captar el contenido de la llamada en tiempo real"]},
+ {n:12, okr:"Churn 0", s:"Alerta de renovación", name:"Alerta de renovación de servicio", desc:"Avisa con anticipación cuando un servicio contratado está por vencer, para que el KAM gestione la renovación a tiempo.", i:10, c:4, dep:["Validar en HubSpot los campos disponibles para el gatillador"]},
+ {n:13, okr:"Churn 0", s:"AI Insights comerciales", name:"AI Insights sobre el dashboard comercial", desc:"Alertas e insights automáticos sobre deals estancados, cuentas sin actividad y riesgo de cuenta, para que gerencia los vea antes del cierre de mes.", i:6, c:5, dep:["Configurar las métricas o indicadores a mapear"]},
+ {n:14, okr:"EBITDA", s:"Reporte comercial mensual", name:"Automatización del reporte comercial mensual", desc:"Genera el reporte y la presentación que gerencia arma manualmente cada mes para el comité.", i:2, c:5, dep:["Validar formatos e información a copiar"]},
+ {n:15, okr:"Churn 0", s:"Touch-points: journey + follow-up", name:"Automatización de touch-points: journey + follow-up", desc:"Mejora los journeys y toques de follow-up para que ninguna cuenta activa quede mucho tiempo sin contacto, con contexto y personalización.", i:8, c:6, dep:["Armar el journey ideal","Human in the loop"]},
+ {n:16, okr:"Churn 0", s:"Base de cumpleaños", name:"Base de cumpleaños", desc:"Base de cumpleaños de contactos clave con recordatorio para comprar el regalo y enviar un saludo.", i:4, c:6, dep:["Sencillo si ya existe la BBDD","Más complejo si hay que relevar las fechas"]},
+ {n:17, okr:"Automatización IA", s:"Agente de onboarding comercial", name:"Agente de onboarding comercial", desc:"Enseña a los nuevos colaboradores a usar las herramientas y el contexto del área.", i:2, c:4, dep:["Recolectar la información del área"]},
+ {n:18, okr:"Ventas", s:"Generador de organigramas", name:"Generador de organigramas", desc:"Genera diagramas jerárquicos de las empresas con los contactos y cargos de HubSpot y LinkedIn.", i:10, c:6, dep:["Piloto con 3 cuentas; luego escalar","BBDD actualizada"]}
+];
+const ORDER = [3,9,12,5,8,18,1,6,15,13,7,16,17,10,11,14,2,4];
+const TIES = {12:"Empata con #5; necesita menos preparación", 18:"Empata con #1; alimenta la v2 de #1", 10:"Empata con #11 y #14; más impacto que #14"};
+
+const byN = Object.fromEntries(DATA.map(d=>[d.n,d]));
+DATA.forEach(d=>{
+  d.pts = d.i * (11 - d.c);
+  d.q = d.i >= 6 ? (d.c <= 5 ? "do" : "plan") : (d.c <= 5 ? "del" : "drop");
+});
+ORDER.forEach((n,k)=>{ byN[n].rank = k + 1; });
+const esc = s => s.replace(/[&<>"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[ch]));
+
+const mx = document.getElementById("mx");
+["do","plan","del","drop"].forEach(k=>{
+  const items = DATA.filter(d=>d.q===k).sort((a,b)=>a.rank-b.rank);
+  const el = document.createElement("div");
+  el.className = "q " + k;
+  el.innerHTML = `
+    <div class="q-head">
+      <div class="q-axis">${Q[k].axis}</div>
+      <div class="q-title"><h3>${Q[k].t}</h3><span class="q-count">${items.length} ${items.length===1?"iniciativa":"iniciativas"}</span></div>
+      <p class="q-desc">${Q[k].d}</p>
+    </div>
+    <ul>${items.map(d=>`
+      <li class="chip" title="${esc(d.name)}: ${esc(d.desc)}">
+        <span class="rank" aria-label="Orden ${d.rank}">${d.rank}</span>
+        <span class="nm">${esc(d.s)}<small>#${d.n} · ${esc(d.okr)} · I${d.i} · C${d.c}</small></span>
+        <span class="pts">${d.pts}<small>PTS</small></span>
+      </li>`).join("")}
+    </ul>`;
+  mx.appendChild(el);
+});
+
+document.getElementById("tb").innerHTML = ORDER.map(n=>{
+  const d = byN[n];
+  return `<tr>
+    <td class="ord">${d.rank}</td>
+    <td><div class="t-nm">#${d.n} ${esc(d.name)}</div><div class="t-ds">${esc(d.desc)}</div></td>
+    <td><span class="okr">${esc(d.okr)}</span></td>
+    <td><span class="tag ${d.q}">${Q[d.q].t}</span></td>
+    <td class="n">${d.i}</td>
+    <td class="n">${d.c}</td>
+    <td class="n score">${d.pts}${TIES[d.n] ? `<span class="tie">${TIES[d.n]}</span>` : ""}</td>
+    <td><ul class="deps">${d.dep.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></td>
+  </tr>`;
+}).join("");
+</script>
+</body>
+</html>
